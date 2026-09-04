@@ -45,11 +45,21 @@ guard let appIconMaster = NSImage(contentsOfFile: appIconPath) else {
 /// centered optically regardless of padding in the source file.
 func contentBounds(of rep: NSBitmapImageRep) -> CGRect {
     var minX = rep.pixelsWide, minY = rep.pixelsHigh, maxX = 0, maxY = 0
-    for y in 0..<rep.pixelsHigh {
-        for x in 0..<rep.pixelsWide {
-            if let color = rep.colorAt(x: x, y: y), color.alphaComponent > 0.05 {
-                minX = min(minX, x); maxX = max(maxX, x)
-                minY = min(minY, y); maxY = max(maxY, y)
+    if let data = rep.bitmapData {
+        let bpr = rep.bytesPerRow
+        let spp = rep.samplesPerPixel
+        let w = rep.pixelsWide
+        let h = rep.pixelsHigh
+        for y in 0..<h {
+            let row = data.advanced(by: y * bpr)
+            for x in 0..<w {
+                let alpha = spp >= 4 ? row[x * spp + 3] : (spp == 2 ? row[x * spp + 1] : 255)
+                if alpha > 12 {
+                    if x < minX { minX = x }
+                    if x > maxX { maxX = x }
+                    if y < minY { minY = y }
+                    if y > maxY { maxY = y }
+                }
             }
         }
     }

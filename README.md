@@ -1,49 +1,28 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/logo-dark.svg">
-    <img src="docs/assets/readme/logo.svg" width="220" alt="Vorssaint logo">
-  </picture>
+  <img src="docs/assets/readme/icon.png" width="160" alt="OmniBar macOS App Icon">
 </p>
 
-<h1 align="center">Vorssaint</h1>
+<h1 align="center">OmniBar macOS</h1>
 
 <p align="center">
-  One menu bar icon doing the job of a dozen paid Mac apps.<br>
-  Free, open source, and everything runs on your Mac.
+  <strong>The ultimate all-in-one menu bar toolkit for ALL Macs (Intel & Apple Silicon).</strong><br>
+  Per-app volume, real-time system monitor, fan control, window snapping, Dock previews, clipboard history & more.<br>
+  100% Free, Open Source, and runs entirely locally on your Mac.
 </p>
 
 <p align="center">
-  <a href="https://vorssaint.com">Website</a> ·
   <a href="#install">Install</a> ·
   <a href="#everything-it-does">Features</a> ·
   <a href="#private-by-default">Privacy</a> ·
   <a href="CHANGELOG.md">Changelog</a> ·
-  <a href="mailto:hello@vorssaint.com">Contact</a> ·
-  <a href="https://buymeacoffee.com/vorssaint">Buy Me a Coffee</a>
+  <a href="https://github.com/Medelcartelinc/OmniBar-macOS/releases">Download Releases</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/vorssaint/vorssaint-utils/releases"><img src="https://img.shields.io/github/v/release/vorssaint/vorssaint-utils?label=release&color=4c8dff" alt="Latest release"></a>
-  <a href="https://github.com/vorssaint/vorssaint-utils/releases"><img src="https://img.shields.io/github/downloads/vorssaint/vorssaint-utils/total?color=4c8dff" alt="Downloads"></a>
-  <a href="https://github.com/vorssaint/vorssaint-utils/actions/workflows/ci.yml"><img src="https://github.com/vorssaint/vorssaint-utils/actions/workflows/ci.yml/badge.svg?branch=main&event=push" alt="CI status"></a>
-  <a href="#what-you-need"><img src="https://img.shields.io/badge/macOS-14%2B%20Apple%20Silicon-black" alt="macOS 14 and newer, Apple Silicon"></a>
+  <a href="https://github.com/Medelcartelinc/OmniBar-macOS/releases"><img src="https://img.shields.io/github/v/release/Medelcartelinc/OmniBar-macOS?label=release&color=4c8dff" alt="Latest release"></a>
+  <a href="https://github.com/Medelcartelinc/OmniBar-macOS/releases"><img src="https://img.shields.io/github/downloads/Medelcartelinc/OmniBar-macOS/total?color=4c8dff" alt="Downloads"></a>
+  <a href="#what-you-need"><img src="https://img.shields.io/badge/macOS-14%2B%20(Intel%20%26%20Apple%20Silicon)-brightgreen" alt="macOS 14 and newer (Intel & Apple Silicon)"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License GPL 3.0 or later"></a>
-</p>
-
-<p align="center">
-  <a href="https://discord.gg/M6BwWH4BJp">
-    <img src="docs/assets/readme/discord-symbol.svg" width="72" alt="Discord">
-  </a>
-</p>
-
-<p align="center">
-  For anything private, email
-  <a href="mailto:hello@vorssaint.com"><strong>hello@vorssaint.com</strong></a>.
-</p>
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/53716?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-53716" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/53716" alt="vorssaint/vorssaint-utils | Trendshift" width="250" height="55"></a>
-  <a href="https://trendshift.io/repositories/53716?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-53716" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/53716/weekly?language=Swift" alt="vorssaint/vorssaint-utils | Trendshift weekly ranking" width="250" height="55"></a>
 </p>
 
 <p align="center">
@@ -205,23 +184,27 @@ The shelf and almost every quick toggle need no permission at all. Finder cut an
 
 ## What you need
 
-- A Mac with Apple Silicon
-- macOS 14 Sonoma or newer
+- **Hardware**: Compatible with **ALL Macs** (Intel x86_64 & Apple Silicon ARM64)
+- **OS**: macOS 14 Sonoma, macOS 15 Sequoia, macOS 16 Tahoe or newer
+
+### Quick Download & Install
+
+Download the latest pre-built `.dmg` from the [Releases page](https://github.com/Medelcartelinc/OmniBar-macOS/releases), open it, and drag **OmniBar** to your Applications folder.
 
 ### Build it yourself
 
 ```sh
-git clone https://github.com/vorssaint/vorssaint-utils.git
-cd vorssaint-utils
+git clone https://github.com/Medelcartelinc/OmniBar-macOS.git
+cd OmniBar-macOS
 ./build.sh            # compile, generate the icon, assemble the signed bundle
-./build.sh --install  # the same, then install into Applications and launch
+./build.sh --install  # compile and install into Applications, then launch
 ```
 
-Xcode Command Line Tools are the only requirement. The [contributing guide](CONTRIBUTING.md) covers the layout and conventions. Official builds come only from the maintainer: the GPL covers the source, while the Vorssaint name, icon and look are covered by [TRADEMARKS.md](TRADEMARKS.md), so forks need their own identity.
+Xcode Command Line Tools (`xcode-select --install`) are the only requirement.
 
 ## When something misbehaves
 
-The [troubleshooting guide](docs/TROUBLESHOOTING.md) walks through the common cases: the app blocked on first launch, a permission that will not stick, thumbnails showing as icons. To remove Vorssaint completely, `./Tools/uninstall.sh` quits the app, drops the login item, resets its privacy grants and deletes every trace.
+The [troubleshooting guide](docs/TROUBLESHOOTING.md) walks through common cases. To remove OmniBar completely, `./Tools/uninstall.sh` quits the app, drops the login item, resets its privacy grants and cleans its files.
 
 ## Documentation
 
@@ -229,23 +212,17 @@ The [troubleshooting guide](docs/TROUBLESHOOTING.md) walks through the common ca
 - [Permissions](docs/PERMISSIONS.md), every macOS permission in plain words
 - [Troubleshooting](docs/TROUBLESHOOTING.md), the common fixes
 - [Contributing](CONTRIBUTING.md), build, layout and conventions
-- [Support](SUPPORT.md), where to get help
-- [Security](SECURITY.md), how to report a vulnerability
 
-## Community
+## Acknowledgements & Upstream
 
-Vorssaint went from first commit to the front of GitHub trending in three days, top of the Swift charts, and issues and pull requests have shaped every release since. Bug reports, feature ideas and translations are all welcome, starting from the [contributing guide](CONTRIBUTING.md).
-
-Vorssaint is free and will stay that way. If it earned its place in your menu bar, a star helps other people find it, and a [coffee](https://buymeacoffee.com/vorssaint) keeps the maintainer awake, with or without the Keep awake feature.
-
-## Acknowledgements
-
-- App icon designed by [@divisionseven](https://github.com/divisionseven)
+- **Upstream Project**: OmniBar macOS is based on and forked from the fantastic open-source project [vorssaint/vorssaint-utils](https://github.com/vorssaint/vorssaint-utils) by [@vorssaint](https://github.com/vorssaint) under GPL-3.0.
+- **Intel & Universal Support**: Maintained and extended by [Medelcartelinc](https://github.com/Medelcartelinc) to provide native support for Intel Macs and Apple Silicon.
+- **Brand & Identity**: In strict compliance with [TRADEMARKS.md](TRADEMARKS.md), this fork maintains its own distinct visual brand, app icon, bundle ID (`com.medelcartel.omnibar`), and repository.
 
 ## License
 
-[GPL 3.0 or later](LICENSE), copyright 2026 Vorssaint. The license covers the source code; the Vorssaint name, logo and look are covered separately in [TRADEMARKS.md](TRADEMARKS.md).
+[GPL 3.0 or later](LICENSE). Free and open source software for everyone.
 
 <p align="center">
-  <sub>Made by <a href="https://x.com/vorssaint">@vorssaint</a></sub>
+  <sub>Fork maintained by <a href="https://github.com/Medelcartelinc">Medelcartelinc</a></sub>
 </p>
