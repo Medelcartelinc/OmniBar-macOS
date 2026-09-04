@@ -97,7 +97,7 @@ final class TextSnippetService {
             shouldStopTapThread = false
             pendingTapRestart = false
             let thread = Thread { [weak self] in self?.runEventTap() }
-            thread.name = "Vorssaint Text Expansion"
+            thread.name = "OmniBar Text Expansion"
             thread.qualityOfService = .userInteractive
             tapThread = thread
             return thread

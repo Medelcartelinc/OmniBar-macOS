@@ -182,7 +182,7 @@ final class SuperKeyService: ObservableObject {
             shouldStopTapThread = false
             pendingTapRestart = false
             let thread = Thread { [weak self] in self?.runEventTap() }
-            thread.name = "Vorssaint Super Key"
+            thread.name = "OmniBar Super Key"
             thread.qualityOfService = .userInteractive
             tapThread = thread
             return thread

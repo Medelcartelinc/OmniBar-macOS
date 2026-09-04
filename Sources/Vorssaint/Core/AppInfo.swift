@@ -41,6 +41,6 @@ enum AppInfo {
     /// this into the Developer bundle only, so you can confirm at a glance that the
     /// running dev app matches the source you are about to change. nil in the official app.
     static var buildCommit: String? {
-        Bundle.main.object(forInfoDictionaryKey: "VorssaintBuildCommit") as? String
+        Bundle.main.object(forInfoDictionaryKey: "OmniBarBuildCommit") as? String
     }
 }

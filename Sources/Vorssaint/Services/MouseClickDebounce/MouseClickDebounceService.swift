@@ -95,7 +95,7 @@ final class MouseClickDebounceService {
             let thread = Thread { [weak self] in
                 self?.runEventTap()
             }
-            thread.name = "Vorssaint Mouse Click Debounce"
+            thread.name = "OmniBar Mouse Click Debounce"
             thread.qualityOfService = .userInteractive
             tapThread = thread
             return thread

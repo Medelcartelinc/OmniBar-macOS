@@ -90,7 +90,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "Kill %@ and all its child processes?",
         killFailedTitle: "Couldn’t Kill Process",
         killFailedMessage: "The process may have already exited or require additional privileges.",
-        adminPromptFormat: "Vorssaint needs administrator access to end “%@”."
+        adminPromptFormat: "OmniBar needs administrator access to end “%@”."
     )
 
     static let ptBR = KillProcessFeatureStrings(
@@ -123,7 +123,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "Encerrar %@ e todos os seus processos filhos?",
         killFailedTitle: "Não foi possível encerrar o processo",
         killFailedMessage: "O processo pode já ter saído ou exigir privilégios adicionais.",
-        adminPromptFormat: "O Vorssaint precisa de acesso de administrador para encerrar “%@”."
+        adminPromptFormat: "O OmniBar precisa de acesso de administrador para encerrar “%@”."
     )
 
     static let tr = KillProcessFeatureStrings(
@@ -156,7 +156,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "%@ ve tüm alt işlemleri sonlandırılsın mı?",
         killFailedTitle: "İşlem Sonlandırılamadı",
         killFailedMessage: "İşlem zaten sona ermiş veya ek yetki gerektiriyor olabilir.",
-        adminPromptFormat: "Vorssaint’in “%@” işlemini sonlandırması için yönetici erişimi gerekiyor."
+        adminPromptFormat: "OmniBar’in “%@” işlemini sonlandırması için yönetici erişimi gerekiyor."
     )
 
     static let ru = KillProcessFeatureStrings(
@@ -189,7 +189,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "Завершить %@ и все его дочерние процессы?",
         killFailedTitle: "Не удалось завершить процесс",
         killFailedMessage: "Процесс мог уже завершиться или требует дополнительных прав.",
-        adminPromptFormat: "Vorssaint нужны права администратора, чтобы завершить «%@»."
+        adminPromptFormat: "OmniBar нужны права администратора, чтобы завершить «%@»."
     )
 
     static let es = KillProcessFeatureStrings(
@@ -222,7 +222,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "¿Finalizar %@ y todos sus procesos hijos?",
         killFailedTitle: "No se pudo finalizar el proceso",
         killFailedMessage: "El proceso puede haber terminado ya o requerir privilegios adicionales.",
-        adminPromptFormat: "Vorssaint necesita acceso de administrador para finalizar “%@”."
+        adminPromptFormat: "OmniBar necesita acceso de administrador para finalizar “%@”."
     )
 
     static let de = KillProcessFeatureStrings(
@@ -255,7 +255,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "%@ und alle untergeordneten Prozesse beenden?",
         killFailedTitle: "Prozess konnte nicht beendet werden",
         killFailedMessage: "Der Prozess wurde möglicherweise bereits beendet oder benötigt zusätzliche Rechte.",
-        adminPromptFormat: "Vorssaint benötigt Administratorrechte, um „%@“ zu beenden."
+        adminPromptFormat: "OmniBar benötigt Administratorrechte, um „%@“ zu beenden."
     )
 
     static let fr = KillProcessFeatureStrings(
@@ -288,7 +288,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "Arrêter %@ et tous ses processus enfants\u{00A0}?",
         killFailedTitle: "Impossible d’arrêter le processus",
         killFailedMessage: "Le processus a peut-être déjà quitté ou nécessite des privilèges supplémentaires.",
-        adminPromptFormat: "Vorssaint a besoin d’un accès administrateur pour arrêter «\u{00A0}%@\u{00A0}»."
+        adminPromptFormat: "OmniBar a besoin d’un accès administrateur pour arrêter «\u{00A0}%@\u{00A0}»."
     )
 
     static let it = KillProcessFeatureStrings(
@@ -321,7 +321,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "Terminare %@ e tutti i suoi processi figli?",
         killFailedTitle: "Impossibile terminare il processo",
         killFailedMessage: "Il processo potrebbe essere già uscito o richiedere privilegi aggiuntivi.",
-        adminPromptFormat: "Vorssaint richiede l’accesso da amministratore per terminare “%@”."
+        adminPromptFormat: "OmniBar richiede l’accesso da amministratore per terminare “%@”."
     )
 
     static let ja = KillProcessFeatureStrings(
@@ -420,7 +420,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "要结束“%@”及其所有子进程吗？",
         killFailedTitle: "无法结束进程",
         killFailedMessage: "该进程可能已经退出，或需要额外的权限。",
-        adminPromptFormat: "Vorssaint 需要您的管理员密码才能结束“%@”。"
+        adminPromptFormat: "OmniBar 需要您的管理员密码才能结束“%@”。"
     )
 
     static let zhTW = KillProcessFeatureStrings(
@@ -453,7 +453,7 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "要結束「%@」及其所有子處理程序嗎？",
         killFailedTitle: "無法結束處理程序",
         killFailedMessage: "該處理程序可能已經結束，或需要額外的權限。",
-        adminPromptFormat: "Vorssaint 需要管理員權限才能結束「%@」。"
+        adminPromptFormat: "OmniBar 需要管理員權限才能結束「%@」。"
     )
 
     static let zhHK = KillProcessFeatureStrings(
@@ -486,6 +486,6 @@ extension KillProcessFeatureStrings {
         confirmKillTreeFormat: "要結束「%@」及其所有子處理程序嗎？",
         killFailedTitle: "無法結束處理程序",
         killFailedMessage: "該處理程序可能已經結束，或需要額外的權限。",
-        adminPromptFormat: "Vorssaint 需要管理員權限才能結束「%@」。"
+        adminPromptFormat: "OmniBar 需要管理員權限才能結束「%@」。"
     )
 }

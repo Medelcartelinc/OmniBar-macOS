@@ -48,7 +48,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "이 설정을 가져올까요?",
         importConfirmBody: "현재 설정이 파일의 설정으로 바뀌고 앱이 다시 시작됩니다. 이 Mac의 다른 항목은 변경되지 않습니다.",
         importAction: "가져오고 다시 시작",
-        invalidFile: "이 파일은 유효한 Vorssaint 백업이 아닙니다."
+        invalidFile: "이 파일은 유효한 OmniBar 백업이 아닙니다."
     )
 }
 
@@ -62,7 +62,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Import these settings?",
         importConfirmBody: "Your current settings are replaced by the file’s and the app restarts. Nothing else on this Mac is touched.",
         importAction: "Import and restart",
-        invalidFile: "This file is not a valid Vorssaint backup."
+        invalidFile: "This file is not a valid OmniBar backup."
     )
 
     static let ptBR = BackupFeatureStrings(
@@ -74,7 +74,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Importar estas configurações?",
         importConfirmBody: "As configurações atuais são substituídas pelas do arquivo e o app reinicia. Nada mais neste Mac é alterado.",
         importAction: "Importar e reiniciar",
-        invalidFile: "Este arquivo não é um backup válido do Vorssaint."
+        invalidFile: "Este arquivo não é um backup válido do OmniBar."
     )
 
     static let tr = BackupFeatureStrings(
@@ -86,7 +86,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Bu ayarlar içe aktarılsın mı?",
         importConfirmBody: "Mevcut ayarlar dosyadakilerle değiştirilir ve uygulama yeniden başlar. Bu Mac’te başka hiçbir şeye dokunulmaz.",
         importAction: "İçe aktar ve yeniden başlat",
-        invalidFile: "Bu dosya geçerli bir Vorssaint yedeği değil."
+        invalidFile: "Bu dosya geçerli bir OmniBar yedeği değil."
     )
 
     static let ru = BackupFeatureStrings(
@@ -98,7 +98,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Импортировать эти настройки?",
         importConfirmBody: "Текущие настройки заменяются настройками из файла, и приложение перезапускается. Больше ничего на этом Mac не меняется.",
         importAction: "Импортировать и перезапустить",
-        invalidFile: "Этот файл не является корректной резервной копией Vorssaint."
+        invalidFile: "Этот файл не является корректной резервной копией OmniBar."
     )
 
     static let es = BackupFeatureStrings(
@@ -110,7 +110,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "¿Importar estos ajustes?",
         importConfirmBody: "Los ajustes actuales se sustituyen por los del archivo y la app se reinicia. Nada más cambia en este Mac.",
         importAction: "Importar y reiniciar",
-        invalidFile: "Este archivo no es una copia de seguridad válida de Vorssaint."
+        invalidFile: "Este archivo no es una copia de seguridad válida de OmniBar."
     )
 
     static let de = BackupFeatureStrings(
@@ -122,7 +122,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Diese Einstellungen importieren?",
         importConfirmBody: "Die aktuellen Einstellungen werden durch die der Datei ersetzt und die App startet neu. Sonst ändert sich auf diesem Mac nichts.",
         importAction: "Importieren und neu starten",
-        invalidFile: "Diese Datei ist kein gültiges Vorssaint-Backup."
+        invalidFile: "Diese Datei ist kein gültiges OmniBar-Backup."
     )
 
     static let fr = BackupFeatureStrings(
@@ -134,7 +134,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Importer ces réglages\u{00A0}?",
         importConfirmBody: "Les réglages actuels sont remplacés par ceux du fichier et l’app redémarre. Rien d’autre ne change sur ce Mac.",
         importAction: "Importer et redémarrer",
-        invalidFile: "Ce fichier n’est pas une sauvegarde Vorssaint valide."
+        invalidFile: "Ce fichier n’est pas une sauvegarde OmniBar valide."
     )
 
     static let it = BackupFeatureStrings(
@@ -146,7 +146,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "Importare queste impostazioni?",
         importConfirmBody: "Le impostazioni attuali vengono sostituite da quelle del file e l’app si riavvia. Nient’altro cambia su questo Mac.",
         importAction: "Importa e riavvia",
-        invalidFile: "Questo file non è un backup Vorssaint valido."
+        invalidFile: "Questo file non è un backup OmniBar valido."
     )
 
     static let ja = BackupFeatureStrings(
@@ -158,7 +158,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "この設定を読み込みますか?",
         importConfirmBody: "現在の設定はファイルの内容に置き換えられ、アプリが再起動します。このMacのほかの部分は変わりません。",
         importAction: "読み込んで再起動",
-        invalidFile: "このファイルは有効なVorssaintのバックアップではありません。"
+        invalidFile: "このファイルは有効なOmniBarのバックアップではありません。"
     )
 
     static let zhHans = BackupFeatureStrings(
@@ -170,7 +170,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "导入这些设置？",
         importConfirmBody: "当前设置将被文件中的设置替换，App 会重启。这台 Mac 上的其他内容不受影响。",
         importAction: "导入并重启",
-        invalidFile: "该文件不是有效的 Vorssaint 备份。"
+        invalidFile: "该文件不是有效的 OmniBar 备份。"
     )
 
     static let zhTW = BackupFeatureStrings(
@@ -182,7 +182,7 @@ extension BackupFeatureStrings {
         importConfirmTitle: "匯入這些設定?",
         importConfirmBody: "目前設定將被檔案中的設定取代,App 會重新啟動。這台 Mac 上的其他內容不受影響。",
         importAction: "匯入並重新啟動",
-        invalidFile: "此檔案不是有效的 Vorssaint 備份。"
+        invalidFile: "此檔案不是有效的 OmniBar 備份。"
     )
 
     static let zhHK = BackupFeatureStrings(
@@ -194,6 +194,6 @@ extension BackupFeatureStrings {
         importConfirmTitle: "匯入這些設定?",
         importConfirmBody: "目前設定將被檔案中的設定取代,App 會重新啟動。這台 Mac 上的其他內容不受影響。",
         importAction: "匯入並重新啟動",
-        invalidFile: "此檔案不是有效嘅 Vorssaint 備份。"
+        invalidFile: "此檔案不是有效嘅 OmniBar 備份。"
     )
 }

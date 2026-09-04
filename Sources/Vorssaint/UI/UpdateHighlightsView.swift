@@ -72,7 +72,7 @@ struct UpdateHighlightsView: View {
             VStack(spacing: 3) {
                 Text(s.highlightsTitle)
                     .font(.title3.weight(.bold))
-                Text("Vorssaint \(AppInfo.version)")
+                Text("OmniBar \(AppInfo.version)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

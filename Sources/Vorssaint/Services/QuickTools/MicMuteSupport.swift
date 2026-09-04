@@ -10,7 +10,7 @@ enum MicMuteSupport {
     /// The app's own private mixing device. It carries a tapped app's audio,
     /// not a microphone, and muting it would silence the very thing the mixer
     /// is rendering.
-    static let ownDeviceName = "Vorssaint Mixer"
+    static let ownDeviceName = "OmniBar Mixer"
 
     /// The level a device falls back to when nothing was ever saved for it:
     /// loud enough to be usable, quiet enough not to startle.

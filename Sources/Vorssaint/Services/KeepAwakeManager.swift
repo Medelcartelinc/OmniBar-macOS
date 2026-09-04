@@ -473,7 +473,7 @@ final class KeepAwakeManager: ObservableObject {
             var id = IOPMAssertionID(0)
             let ok = IOPMAssertionCreateWithName("PreventUserIdleSystemSleep" as CFString,
                                                  IOPMAssertionLevel(kIOPMAssertionLevelOn),
-                                                 "Vorssaint: keep the Mac awake" as CFString,
+                                                 "OmniBar: keep the Mac awake" as CFString,
                                                  &id)
             if ok == kIOReturnSuccess {
                 systemAssertion = id
@@ -490,7 +490,7 @@ final class KeepAwakeManager: ObservableObject {
             var id = IOPMAssertionID(0)
             let ok = IOPMAssertionCreateWithName("PreventUserIdleDisplaySleep" as CFString,
                                                  IOPMAssertionLevel(kIOPMAssertionLevelOn),
-                                                 "Vorssaint: keep the display on" as CFString,
+                                                 "OmniBar: keep the display on" as CFString,
                                                  &id)
             if ok == kIOReturnSuccess {
                 displayAssertion = id
