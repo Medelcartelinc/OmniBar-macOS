@@ -10,7 +10,7 @@ enum UpdateShowcaseInfo {
     static let mediaSHA256 = "88031b2b48708b8eb96248fef1143432a0600382b59ad5ea39e0746af27ab9e8"
 
     static var remoteMediaURL: URL {
-        URL(string: "https://github.com/vorssaint/vorssaint-utils/releases/download/v\(releaseVersion)/\(mediaAssetName)")!
+        URL(string: "https://github.com/Medelcartelinc/OmniBar-macOS/releases/download/v\(releaseVersion)/\(mediaAssetName)")!
     }
 
     static var localDeveloperMediaURL: URL? {
@@ -20,14 +20,13 @@ enum UpdateShowcaseInfo {
            FileManager.default.fileExists(atPath: url.path) {
             return url
         }
-        let desktopDemo = URL(fileURLWithPath: "/Users/vorssaint/Desktop/demo.gif")
-        return FileManager.default.fileExists(atPath: desktopDemo.path) ? desktopDemo : nil
+        return nil
     }
 
     static var cacheDirectory: URL {
         let base = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
-        let bundleID = Bundle.main.bundleIdentifier ?? "com.vorssaint.utils"
+        let bundleID = Bundle.main.bundleIdentifier ?? "com.medelcartel.omnibar"
         return base
             .appendingPathComponent(bundleID, isDirectory: true)
             .appendingPathComponent("UpdateShowcase", isDirectory: true)

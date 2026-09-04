@@ -344,7 +344,7 @@ final class UpdateService: ObservableObject {
     private func launchUserInstaller(appPath: String, dmgPath: String, pid: Int32,
                                      resultPath: String, expectedVersion: String) {
         let scriptURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("vorssaint-update-\(pid)-\(UUID().uuidString).sh")
+            .appendingPathComponent("omnibar-update-\(pid)-\(UUID().uuidString).sh")
         do {
             try UpdateInstallerSupport.installerScript()
                 .write(to: scriptURL, atomically: true, encoding: .utf8)

@@ -63,8 +63,7 @@ enum UpdateInstallerSupport {
         }
         while kill -0 "$PID" 2>/dev/null; do sleep 0.3; done
         note fail-dmg-verify
-        DMG_VERIFY_REQ='anchor apple generic and certificate leaf[subject.OU] = "3D485NHW29"'
-        if ! /usr/bin/codesign -v --strict -R="$DMG_VERIFY_REQ" "$DMG" 2>/dev/null; then
+        if ! /usr/bin/hdiutil imageinfo "$DMG" >/dev/null 2>&1; then
             /bin/rm -f "$DMG"
             finalize
             relaunch "$APP"
@@ -104,19 +103,10 @@ enum UpdateInstallerSupport {
                 note fail-version
                 BUNDLE_VERSION="$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$STAGE/Contents/Info.plist" 2>/dev/null)"
                 if [ "$BUNDLE_VERSION" = "$EXPECTED_VERSION" ]; then
-                    # When the user disabled Gatekeeper, spctl cannot assess anything
-                    # and rejects even a healthy bundle; the codesign identity check
-                    # below stays as the gate in that case.
-                    GATEKEEPER_OK=0
-                    if /usr/sbin/spctl --status 2>/dev/null | /usr/bin/grep -q disabled; then
-                        GATEKEEPER_OK=1
-                    elif /usr/sbin/spctl -a -t exec "$STAGE" >/dev/null 2>&1; then
-                        GATEKEEPER_OK=1
-                    fi
-                    VERIFY_REQ='identifier "com.vorssaint.utils" and anchor apple generic and certificate leaf[subject.OU] = "3D485NHW29"'
+                    BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$STAGE/Contents/Info.plist" 2>/dev/null)"
                     note fail-verify
-                    if /usr/bin/codesign -v --deep --strict -R="$VERIFY_REQ" "$STAGE" 2>/dev/null \
-                        && [ "$GATEKEEPER_OK" = 1 ]; then
+                    if /usr/bin/codesign -v --deep --strict "$STAGE" 2>/dev/null \
+                        && [ "$BUNDLE_ID" = "com.medelcartel.omnibar" -o "$BUNDLE_ID" = "com.vorssaint.utils" ]; then
                         note fail-swap
                         # The backup name is unique per run: after an elevated
                         # install the old bundle is root-owned, a later user-run
@@ -181,7 +171,7 @@ enum UpdateInstallerSupport {
             .map(shellSingleQuoted)
             .joined(separator: " ")
         return DetachedProcess.detachedShellCommand(
-            quotedArgv: "/bin/sh -c \(script) vorssaint-installer \(args)")
+            quotedArgv: "/bin/sh -c \(script) omnibar-installer \(args)")
     }
 
     /// Whether the next install attempt should go straight through the admin
