@@ -21,9 +21,9 @@
 # Run this only to get the same permission-preserving behavior for local builds.
 set -euo pipefail
 
-IDENTITY="Vorssaint Utils Signing"
-KC="$HOME/Library/Keychains/vorssaint-signing.keychain-db"
-KCPASS="vorssaint-signing"
+IDENTITY="OmniBar Signing"
+KC="$HOME/Library/Keychains/omnibar-signing.keychain-db"
+KCPASS="omnibar-signing"
 
 # A find-identity listing also names certificates codesign then rejects, and -v
 # excludes every self-signed one; ask codesign itself with a throwaway copy.
@@ -48,7 +48,7 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 openssl req -x509 -newkey rsa:2048 -keyout "$WORK/key.pem" -out "$WORK/cert.pem" -days 3650 -nodes \
-    -subj "/CN=$IDENTITY/O=Vorssaint" \
+    -subj "/CN=$IDENTITY/O=OmniBar" \
     -addext "keyUsage=critical,digitalSignature" \
     -addext "extendedKeyUsage=critical,codeSigning" \
     -addext "basicConstraints=critical,CA:false" 2>/dev/null

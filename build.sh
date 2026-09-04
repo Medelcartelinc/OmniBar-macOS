@@ -78,6 +78,8 @@ legacy_identity_installed() {
     local probe signed=1
     # A locked keychain still lists its identities but cannot sign with them,
     # and this one is locked after every reboot; unlock it before asking.
+    security unlock-keychain -p omnibar-signing \
+        "$HOME/Library/Keychains/omnibar-signing.keychain-db" 2>/dev/null || true
     security unlock-keychain -p vorssaint-signing \
         "$HOME/Library/Keychains/vorssaint-signing.keychain-db" 2>/dev/null || true
     probe="$(mktemp)"
