@@ -26,9 +26,10 @@ final class FanControlHardware {
         let minimum: SMCClient.Key
         let maximum: SMCClient.Key
         let target: SMCClient.Key
-        let mode: SMCClient.Key
+        let mode: SMCClient.Key?
         let minimumRPM: Double
         let maximumRPM: Double
+        let isIntelFS: Bool
     }
 
     private struct TemperatureKeys {
@@ -51,16 +52,51 @@ final class FanControlHardware {
     }
 
     func readOnlySnapshot() throws -> FanControlSnapshot {
-        let fans = try discoverControlledFans()
-        let snapshot = FanControlSnapshot(fans: try readings(for: fans), isCooling: false,
-                                          endsAt: nil, stopReason: nil,
-                                          coolingLevel: nil,
-                                          configuration: nil,
-                                          temperatures: readTemperatures())
-        if let forceTest = forceTestKey(), try byteValue(forceTest) != 0 {
-            throw FanControlHardwareError.alreadyControlled
+        do {
+            let fans = try discoverControlledFans()
+            let snapshot = FanControlSnapshot(fans: try readings(for: fans), isCooling: false,
+                                              endsAt: nil, stopReason: nil,
+                                              coolingLevel: nil,
+                                              configuration: nil,
+                                              temperatures: readTemperatures())
+            if let forceTest = forceTestKey(), try byteValue(forceTest) != 0 {
+                throw FanControlHardwareError.alreadyControlled
+            }
+            return snapshot
+        } catch {
+            if let fallback = fallbackSnapshot() {
+                return fallback
+            }
+            throw error
         }
-        return snapshot
+    }
+
+    private func fallbackSnapshot() -> FanControlSnapshot? {
+        guard let countKey = client.key(named: "FNum"),
+              let countValue = client.readValue(countKey),
+              let count = FanControlPolicy.fanCount(from: countValue), count > 0 else { return nil }
+        var fanReadings: [FanControlFanReading] = []
+        for i in 0..<count {
+            guard let actualKey = client.key(named: "F\(i)Ac"),
+                  let actual = client.readValue(actualKey) else { continue }
+            let minVal = client.key(named: "F\(i)Mn").flatMap { client.readValue($0) } ?? 1200
+            let maxVal = client.key(named: "F\(i)Mx").flatMap { client.readValue($0) } ?? 6000
+            let tgtVal = client.key(named: "F\(i)Tg").flatMap { client.readValue($0) } ?? actual
+            fanReadings.append(FanControlFanReading(
+                index: i,
+                actualRPM: max(0, actual),
+                minimumRPM: minVal,
+                maximumRPM: maxVal,
+                targetRPM: max(0, tgtVal),
+                isManuallyControlled: false
+            ))
+        }
+        guard !fanReadings.isEmpty else { return nil }
+        return FanControlSnapshot(fans: fanReadings, isCooling: false,
+                                  endsAt: nil, stopReason: nil,
+                                  coolingLevel: nil,
+                                  configuration: nil,
+                                  temperatures: readTemperatures())
     }
 
     func telemetrySnapshot() throws -> FanControlSnapshot {
@@ -88,7 +124,7 @@ final class FanControlHardware {
 
     func startCooling(level: Int) throws -> [FanControlFanReading] {
         let fans = try discoverControlledFans()
-        guard try fans.allSatisfy({ try FanControlPolicy.isAutomaticMode(modeValue($0.mode)) }) else {
+        guard try fans.allSatisfy({ try FanControlPolicy.isAutomaticMode(fanModeValue($0)) }) else {
             throw FanControlHardwareError.alreadyControlled
         }
         if let forceTest = forceTestKey(), try byteValue(forceTest) != 0 {
@@ -115,7 +151,7 @@ final class FanControlHardware {
 
         if directSucceeded {
             Thread.sleep(forTimeInterval: 0.25)
-            directSucceeded = fans.allSatisfy { (try? modeValue($0.mode)) == 1 }
+            directSucceeded = fans.allSatisfy { (try? fanModeValue($0)) == 1 }
         }
 
         if !directSucceeded {
@@ -180,7 +216,7 @@ final class FanControlHardware {
 
     func validateAutomaticControl() throws {
         let fans = try discoverControlledFans()
-        guard try fans.allSatisfy({ try FanControlPolicy.isAutomaticMode(modeValue($0.mode)) }) else {
+        guard try fans.allSatisfy({ try FanControlPolicy.isAutomaticMode(fanModeValue($0)) }) else {
             throw FanControlHardwareError.alreadyControlled
         }
         if let forceTest = forceTestKey() {
@@ -205,7 +241,7 @@ final class FanControlHardware {
             _ = setByte(0, for: forceTest, attempts: 20)
         }
         let automatic = fans.allSatisfy { fan in
-            (try? modeValue(fan.mode)).map(FanControlPolicy.isAutomaticMode) == true
+            (try? fanModeValue(fan)).map(FanControlPolicy.isAutomaticMode) == true
         }
         let forceTestOff = forceTestKey().map { (try? byteValue($0)) == 0 } ?? true
         if automatic && forceTestOff { activeTargets.removeAll() }
@@ -259,14 +295,20 @@ final class FanControlHardware {
         if let controlledFans { return controlledFans }
         let count = try fanCount()
         var fans: [Fan] = []
+        let fsKey = client.key(named: "FS! ")
         for index in 0..<count {
             guard let actual = client.key(named: "F\(index)Ac"),
                   let minimum = client.key(named: "F\(index)Mn"),
                   let maximum = client.key(named: "F\(index)Mx"),
-                  let target = client.key(named: "F\(index)Tg"),
-                  let mode = modeKey(for: index),
-                  mode.dataSize == 1,
-                  let minimumRPM = client.readValue(minimum),
+                  let target = client.key(named: "F\(index)Tg") else {
+                throw FanControlHardwareError.unsupported
+            }
+            let mode = modeKey(for: index)
+            let isIntelFS = (mode == nil && fsKey != nil)
+            guard mode != nil || isIntelFS else {
+                throw FanControlHardwareError.unsupported
+            }
+            guard let minimumRPM = client.readValue(minimum),
                   let maximumRPM = client.readValue(maximum),
                   FanControlPolicy.validBounds(minimum: minimumRPM, maximum: maximumRPM),
                   SMCValueCodec.encode(maximumRPM, type: target.dataType,
@@ -275,7 +317,8 @@ final class FanControlHardware {
             }
             fans.append(Fan(index: index, actual: actual, minimum: minimum,
                             maximum: maximum, target: target, mode: mode,
-                            minimumRPM: minimumRPM, maximumRPM: maximumRPM))
+                            minimumRPM: minimumRPM, maximumRPM: maximumRPM,
+                            isIntelFS: isIntelFS))
         }
         controlledFans = fans
         return fans
@@ -314,13 +357,14 @@ final class FanControlHardware {
         let keys = client.keys { name in
             TemperatureSensorSelector.isCPUTemperatureKey(name, platform: temperaturePlatform)
                 || name.hasPrefix("Tg")
+                || (temperaturePlatform == .generic && name.hasPrefix("TG"))
         }
         let result = TemperatureKeys(
             cpu: keys.filter {
                 TemperatureSensorSelector.isCPUTemperatureKey($0.name,
                                                               platform: temperaturePlatform)
             },
-            gpu: keys.filter { $0.name.hasPrefix("Tg") }
+            gpu: keys.filter { $0.name.hasPrefix("Tg") || (temperaturePlatform == .generic && $0.name.hasPrefix("TG")) }
         )
         temperatureKeys = result
         return result
@@ -354,7 +398,7 @@ final class FanControlHardware {
                                         maximumRPM: maximum,
                                         targetRPM: max(0, target),
                                         isManuallyControlled: try !FanControlPolicy.isAutomaticMode(
-                                            modeValue(fan.mode)
+                                            fanModeValue(fan)
                                         ))
         }
     }
@@ -363,7 +407,7 @@ final class FanControlHardware {
         guard fans.count == targets.count else { return false }
         for attempt in 0..<attempts {
             let matches = zip(fans, targets).allSatisfy { fan, expected in
-                guard (try? modeValue(fan.mode)) == 1,
+                guard (try? fanModeValue(fan)) == 1,
                       let target = client.readValue(fan.target) else { return false }
                 return FanControlPolicy.targetRPMMatches(target: target, expected: expected)
             }
@@ -371,6 +415,19 @@ final class FanControlHardware {
             if attempt + 1 < attempts { Thread.sleep(forTimeInterval: 0.05) }
         }
         return false
+    }
+
+    private func fanModeValue(_ fan: Fan) throws -> UInt8 {
+        if fan.isIntelFS {
+            guard let fsKey = client.key(named: "FS! "),
+                  let bytes = client.readBytes(fsKey), bytes.count == 2 else { return 0 }
+            let val = (UInt16(bytes[0]) << 8) | UInt16(bytes[1])
+            return (val & (1 << fan.index)) != 0 ? 1 : 0
+        }
+        if let mode = fan.mode {
+            return try byteValue(mode)
+        }
+        return 0
     }
 
     private func modeValue(_ key: SMCClient.Key) throws -> UInt8 {
@@ -385,8 +442,27 @@ final class FanControlHardware {
     }
 
     private func setMode(_ value: UInt8, for fan: Fan, attempts: Int) -> Bool {
-        guard setByte(value, for: fan.mode, attempts: attempts) else { return false }
-        return (try? modeValue(fan.mode)) == value
+        if fan.isIntelFS {
+            guard let fsKey = client.key(named: "FS! ") else { return false }
+            for attempt in 0..<attempts {
+                if let bytes = client.readBytes(fsKey), bytes.count == 2 {
+                    var val = (UInt16(bytes[0]) << 8) | UInt16(bytes[1])
+                    if value == 0 {
+                        val &= ~(UInt16(1) << fan.index)
+                    } else {
+                        val |= (UInt16(1) << fan.index)
+                    }
+                    let outBytes = [UInt8(val >> 8), UInt8(val & 0xff)]
+                    _ = try? client.writeBytes(outBytes, to: fsKey)
+                    if (try? fanModeValue(fan)) == value { return true }
+                }
+                if attempt + 1 < attempts { Thread.sleep(forTimeInterval: 0.05) }
+            }
+            return false
+        }
+        guard let mode = fan.mode else { return false }
+        guard setByte(value, for: mode, attempts: attempts) else { return false }
+        return (try? fanModeValue(fan)) == value
     }
 
     private func setTargetRPM(_ target: Double, for fan: Fan, attempts: Int) -> Bool {
@@ -394,7 +470,7 @@ final class FanControlHardware {
             _ = writeManualPair(for: fan, target: target)
             if let currentTarget = client.readValue(fan.target),
                FanControlPolicy.targetRPMMatches(target: currentTarget, expected: target),
-               (try? modeValue(fan.mode)) == 1 {
+               (try? fanModeValue(fan)) == 1 {
                 return true
             }
             if attempt + 1 < attempts { Thread.sleep(forTimeInterval: 0.05) }
@@ -403,7 +479,11 @@ final class FanControlHardware {
     }
 
     private func writeManualPair(for fan: Fan, target: Double) -> Bool {
-        _ = try? client.writeBytes([1], to: fan.mode)
+        if !fan.isIntelFS, let mode = fan.mode {
+            _ = try? client.writeBytes([1], to: mode)
+        } else if fan.isIntelFS {
+            _ = setMode(1, for: fan, attempts: 1)
+        }
         do {
             try client.writeValue(target, to: fan.target)
             return true

@@ -124,7 +124,53 @@ struct FanControlCardContent: View {
                     .foregroundStyle(Color.secondary.opacity(0.84))
                     .fixedSize(horizontal: false, vertical: true)
             }
+
+            if turboBoost.isSupported {
+                Divider()
+                turboBoostRow
+            }
         }
+    }
+
+    @ObservedObject private var turboBoost = TurboBoostService.shared
+
+    private var turboBoostRow: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "bolt.fill")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(turboBoost.isTurboBoostEnabled ? Color.orange : Color.secondary)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text("Intel Turbo Boost")
+                    .font(.system(size: 11, weight: .medium))
+                Text(turboBoost.isTurboBoostEnabled ? "Attivo (massime prestazioni)" : "Disattivato (temperature basse & silenzioso)")
+                    .font(.system(size: 9))
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Button {
+                turboBoost.toggleTurboBoost()
+            } label: {
+                Text(turboBoost.isTurboBoostEnabled ? "Disattiva" : "Attiva")
+                    .font(.system(size: 10, weight: .semibold))
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+
+            if turboBoost.isAppInstalled {
+                Button {
+                    turboBoost.openSwitcherApp()
+                } label: {
+                    Image(systemName: "arrow.up.forward.app")
+                        .font(.system(size: 10))
+                }
+                .buttonStyle(.plain)
+                .help("Apri Turbo Boost Switcher")
+            }
+        }
+        .padding(.vertical, 2)
     }
 
     private var modePicker: some View {

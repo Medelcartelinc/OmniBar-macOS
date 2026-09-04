@@ -1612,6 +1612,7 @@ struct AboutSettings: View {
                     appDelegate()?.showUpdateHighlights()
                 }
                 Link(l10n.s.viewOnGitHub, destination: AppInfo.repositoryURL)
+                Link("Upstream", destination: AppInfo.upstreamURL)
             }
             Text(AppInfo.copyright)
                 .font(.caption2)
@@ -1829,11 +1830,13 @@ struct SupportSettings: View {
                 )
 
                 HStack(alignment: .top, spacing: 14) {
-                    DiscordMark(width: 24)
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.blue)
                         .frame(width: 38, height: 38)
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color(red: 0.35, green: 0.40, blue: 0.94))
+                                .fill(Color.blue.opacity(0.14))
                         )
 
                     VStack(alignment: .leading, spacing: 7) {
@@ -1846,6 +1849,42 @@ struct SupportSettings: View {
 
                         communityActions
                             .padding(.top, 3)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(16)
+                .frame(maxWidth: 510)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color(nsColor: .controlBackgroundColor))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .strokeBorder(Color(nsColor: .separatorColor).opacity(0.45))
+                )
+
+                HStack(alignment: .top, spacing: 14) {
+                    Image(systemName: "arrow.triangle.branch")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.purple)
+                        .frame(width: 38, height: 38)
+                        .background(Circle().fill(Color.purple.opacity(0.14)))
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Open Source & Attribuzione")
+                            .font(.headline)
+                        Text("OmniBar è basato sul progetto open source vorssaint-utils (licenza GPL-3.0) creato da @vorssaint. Forkato, ribrandizzato e sviluppato per supportare ed estendere la compatibilità su tutti i Mac (inclusi Mac Intel nativi e con OCLP) da Medelcartelinc.")
+                            .font(.system(size: 12.5))
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Button {
+                            openURL(AppInfo.upstreamURL)
+                        } label: {
+                            Label("Progetto originale upstream (vorssaint-utils)", systemImage: "arrow.up.right.square")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.regular)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -1873,38 +1912,35 @@ struct SupportSettings: View {
     private var communityActions: some View {
         ViewThatFits(in: .horizontal) {
             HStack(spacing: 9) {
-                discordButton
-                socialButton
+                githubCommunityButton
+                authorProfileButton
             }
             VStack(alignment: .leading, spacing: 8) {
-                discordButton
-                socialButton
+                githubCommunityButton
+                authorProfileButton
             }
         }
     }
 
-    private var discordButton: some View {
+    private var githubCommunityButton: some View {
         Button {
-            openURL(AppInfo.discordURL)
+            openURL(AppInfo.repositoryURL)
         } label: {
             HStack(spacing: 8) {
-                DiscordMark(width: 19)
+                Image(systemName: "chevron.left.forwardslash.chevron.right")
                 Text(l10n.s.discordIntroJoinButton)
             }
         }
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
-        .tint(Color(red: 0.35, green: 0.40, blue: 0.94))
     }
 
-    private var socialButton: some View {
+    private var authorProfileButton: some View {
         Button {
-            openURL(AppInfo.socialURL)
+            openURL(AppInfo.authorURL)
         } label: {
             HStack(spacing: 7) {
-                XLogoShape()
-                    .fill(Color.primary, style: FillStyle(eoFill: true))
-                    .frame(width: 12, height: 12)
+                Image(systemName: "person.crop.circle.fill")
                 Text(l10n.s.communityIntroFollowButton)
             }
         }

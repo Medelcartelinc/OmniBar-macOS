@@ -11,7 +11,9 @@ enum AppInfo {
     static let repositoryURL = URL(string: "https://github.com/Medelcartelinc/OmniBar-macOS")!
     static let coffeeURL = URL(string: "https://github.com/Medelcartelinc/OmniBar-macOS")!
     static let discordURL = URL(string: "https://github.com/Medelcartelinc/OmniBar-macOS")!
-    static let socialURL = URL(string: "https://github.com/Medelcartelinc/OmniBar-macOS")!
+    static let socialURL = URL(string: "https://github.com/Medelcartelinc")!
+    static let upstreamURL = URL(string: "https://github.com/vorssaint/vorssaint-utils")!
+    static let authorURL = URL(string: "https://github.com/Medelcartelinc")!
 
     /// The bundle version. The fallback only applies to the bare binary
     /// (e.g. `--selftest`), never the shipped app, which reads its Info.plist.

@@ -754,7 +754,7 @@ enum KeepAwakeActiveIcon: String, CaseIterable, Identifiable {
 
     func title(_ strings: Strings) -> String {
         switch self {
-        case .vorssaint: return strings.keepAwakeActiveIconVorssaint
+        case .vorssaint: return strings.keepAwakeActiveIconOmniBar
         case .coffee: return strings.keepAwakeActiveIconCoffee
         case .eye: return strings.keepAwakeActiveIconEye
         case .moon: return strings.keepAwakeActiveIconMoon

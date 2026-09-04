@@ -23,6 +23,7 @@ enum BreakdownKind {
 struct SystemSection: View {
     @ObservedObject private var l10n = L10n.shared
     @ObservedObject private var monitor = SystemMonitor.shared
+    @ObservedObject private var turboBoost = TurboBoostService.shared
     @Environment(\.colorScheme) private var colorScheme
     var collapsible = true
     @State private var expanded: BreakdownKind?
@@ -317,6 +318,27 @@ struct SystemSection: View {
                 subsectionLabel(l10n.s.usageSection)
                 Spacer(minLength: 0)
                 if !editing {
+                    if turboBoost.isSupported {
+                        Button {
+                            turboBoost.toggleTurboBoost()
+                        } label: {
+                            HStack(spacing: 3) {
+                                Image(systemName: "bolt.fill")
+                                    .font(.system(size: 8, weight: .bold))
+                                    .foregroundStyle(turboBoost.isTurboBoostEnabled ? Color.orange : Color.secondary)
+                                Text(turboBoost.isTurboBoostEnabled ? "Turbo ON" : "Turbo OFF")
+                                    .font(.system(size: 9.5, weight: .medium))
+                            }
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(turboBoost.isTurboBoostEnabled ? Color.orange.opacity(0.12) : Color.primary.opacity(0.06))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .help(turboBoost.isTurboBoostEnabled ? "Turbo Boost attivo (clicca per disattivare)" : "Turbo Boost disattivato (clicca per attivare)")
+                    }
                     ActivityMonitorButton()
                 }
             }

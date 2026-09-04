@@ -127,6 +127,7 @@ enum TemperatureSensorSelector {
                                     platform: CPUTemperaturePlatform) -> Bool {
         if platform == .unmappedAppleSilicon { return false }
         if key.hasPrefix("Tp") || key.hasPrefix("Te") { return true }
+        if platform == .generic && key.hasPrefix("TC") { return true }
         return platform == .appleM3Family && key.hasPrefix("Tf")
     }
 

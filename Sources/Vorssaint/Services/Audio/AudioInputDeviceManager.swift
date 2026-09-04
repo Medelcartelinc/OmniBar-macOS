@@ -403,7 +403,7 @@ final class AudioInputDeviceManager: ObservableObject {
             let name = read(deviceID, kAudioObjectPropertyName, &nameRef)
                 ? nameRef as String
                 : uid
-            guard name != "Vorssaint Mixer" else { continue }
+            guard name != "OmniBar Mixer" else { continue }
 
             devices.append(MixerInputDevice(id: uid,
                                             uid: uid,

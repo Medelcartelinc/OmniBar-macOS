@@ -13,7 +13,7 @@ enum SettingsBackup {
     @discardableResult
     static func runExportPanel() -> Bool? {
         let panel = NSSavePanel()
-        panel.nameFieldStringValue = "Vorssaint Settings.plist"
+        panel.nameFieldStringValue = "OmniBar Settings.plist"
         panel.allowedContentTypes = [.propertyList]
         panel.canCreateDirectories = true
         NSApp.activate(ignoringOtherApps: true)
