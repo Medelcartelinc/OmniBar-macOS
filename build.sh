@@ -170,13 +170,13 @@ finalize_installed_bundle_after_child() {
             --identifier "$FAN_HELPER_ID" --sign "$LEGACY_IDENTITY" "$helper"
         [[ -f "$adapter" ]] && /usr/bin/codesign --force --strip-disallowed-xattrs \
             --identifier "$NOW_PLAYING_ADAPTER_ID" --sign "$LEGACY_IDENTITY" "$adapter"
-        /usr/bin/codesign --force --strip-disallowed-xattrs --sign "$LEGACY_IDENTITY" "$bundle"
+        /usr/bin/codesign --force --strip-disallowed-xattrs --entitlements "$ENTITLEMENTS" --sign "$LEGACY_IDENTITY" "$bundle"
     else
         [[ -f "$helper" ]] && /usr/bin/codesign --force --strip-disallowed-xattrs \
             --identifier "$FAN_HELPER_ID" --sign - "$helper"
         [[ -f "$adapter" ]] && /usr/bin/codesign --force --strip-disallowed-xattrs \
             --identifier "$NOW_PLAYING_ADAPTER_ID" --sign - "$adapter"
-        /usr/bin/codesign --force --strip-disallowed-xattrs --sign - "$bundle"
+        /usr/bin/codesign --force --strip-disallowed-xattrs --entitlements "$ENTITLEMENTS" --sign - "$bundle"
     fi
     [[ -f "$helper" ]] && /usr/bin/codesign --verify --strict "$helper"
     [[ -f "$adapter" ]] && /usr/bin/codesign --verify --strict "$adapter"
@@ -568,9 +568,9 @@ codesign_app() {
         codesign_with_timestamp_retry --force --strip-disallowed-xattrs --options runtime --timestamp \
             --entitlements "$ENTITLEMENTS" --sign "$DEVID" "$target"
     elif legacy_identity_installed; then
-        codesign --force --strip-disallowed-xattrs --sign "$LEGACY_IDENTITY" "$target"
+        codesign --force --strip-disallowed-xattrs --entitlements "$ENTITLEMENTS" --sign "$LEGACY_IDENTITY" "$target"
     else
-        codesign --force --strip-disallowed-xattrs --sign - "$target"
+        codesign --force --strip-disallowed-xattrs --entitlements "$ENTITLEMENTS" --sign - "$target"
     fi
 }
 

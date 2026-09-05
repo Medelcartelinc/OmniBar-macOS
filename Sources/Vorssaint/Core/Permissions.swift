@@ -244,6 +244,7 @@ final class Permissions: ObservableObject {
         AXIsProcessTrustedWithOptions(options)
         refreshActivePermissions()
         if !accessibility {
+            openAccessibilitySettings()
             PermissionGuideOverlay.shared.show(for: .accessibility)
         }
     }
@@ -254,6 +255,7 @@ final class Permissions: ObservableObject {
         CGRequestScreenCaptureAccess()
         refreshActivePermissions()
         if !screenRecording {
+            openScreenRecordingSettings()
             PermissionGuideOverlay.shared.show(for: .screenRecording)
         }
     }
@@ -382,8 +384,12 @@ final class Permissions: ObservableObject {
     }
 
     private func open(pane: String) {
-        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?\(pane)")!
-        NSWorkspace.shared.open(url)
+        if let modern = URL(string: "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?\(pane)"),
+           NSWorkspace.shared.open(modern) {
+            return
+        }
+        let fallback = URL(string: "x-apple.systempreferences:com.apple.preference.security?\(pane)")!
+        NSWorkspace.shared.open(fallback)
     }
 
     // MARK: - Automation (Apple Events)

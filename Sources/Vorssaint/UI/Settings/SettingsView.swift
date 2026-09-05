@@ -2055,6 +2055,11 @@ struct PermissionRow: View {
                             permissions.openMicrophoneSettings()
                         }
                     }
+                    if kind == .screenRecording || kind == .accessibility {
+                        Button(FeatureStrings.permissionGuide(l10n.language).startOver) {
+                            permissions.startOver(kind)
+                        }
+                    }
                 }
                 .controlSize(.small)
             }

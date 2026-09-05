@@ -62,6 +62,8 @@
 	<string>OmniBar records your microphone only when you turn it on for a screen recording. The audio stays on your Mac unless you choose to create a temporary link.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>OmniBar shows your camera only in the preview window you open, so you can check how you look before a call. Nothing is recorded or leaves your Mac.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>OmniBar uses Screen Recording to capture screenshots, record your screen, and display window titles and previews in the app switcher. Nothing leaves your Mac.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>OmniBar checks local metadata in Downloads to review, organize or trash only confirmed WhatsApp files you choose.</string>
 	<key>NSDesktopFolderUsageDescription</key>
